@@ -1,2 +1,8 @@
+## Core
 Django==3.0.7
+
+## Database Connector
 psycopg2==2.8.5
+
+## Environment Variables 
+python-dotenv==0.13.0
