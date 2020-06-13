@@ -2,8 +2,14 @@
 import os
 import sys
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SETTINGS = os.getenv("SETTINGS")
+
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", SETTINGS)
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
