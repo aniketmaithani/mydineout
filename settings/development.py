@@ -2,10 +2,10 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-14 03:04:31
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-14 03:24:45
+# @Last Modified time: 2020-06-14 03:33:44
 from .settings import *
 
-INSTALLED_APPS = INSTALLED_APPS + ['debug_toolbar', ]
+INSTALLED_APPS = INSTALLED_APPS + ['debug_toolbar', 'django_extensions', ]
 
 MIDDLEWARE = MIDDLEWARE + ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 
