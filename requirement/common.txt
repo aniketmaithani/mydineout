@@ -7,3 +7,6 @@ psycopg2==2.8.5
 
 ## Environment Variables 
 python-dotenv==0.13.0
+
+## Authentication
+djoser==2.0.3

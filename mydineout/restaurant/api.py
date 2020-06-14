@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-14 06:44:25
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-14 12:01:13
+# @Last Modified time: 2020-06-14 13:25:49
 from django.db.models import Q
 from rest_framework import generics
 from rest_framework.response import Response

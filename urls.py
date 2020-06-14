@@ -17,10 +17,12 @@ from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
+
 from mydineout.restaurant.api import RestaurantListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/v1/auth/', include('djoser.urls.authtoken')),
     url(r'^api/v1/restaurant/getrestaurant', RestaurantListView.as_view()),
 ]
 
