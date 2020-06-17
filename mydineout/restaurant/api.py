@@ -2,10 +2,11 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-14 06:44:25
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-17 14:50:50
+# @Last Modified time: 2020-06-17 15:14:22
 from django.db.models import Q
 from rest_framework import generics
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
 from .helper import (blacklist_restaurant_by_id, blacklisted_restaurant,
@@ -26,10 +27,16 @@ class RestaurantListView(generics.ListAPIView):
         postal_code = self.request.query_params.get('postalcode', None)
         country = self.request.query_params.get('country', None)
         if city is not None or postal_code is not None:
-            queryset = Restaurant.objects.filter(
-                Q(city=city) | Q(pincode=postal_code))
+            try:
+                queryset = Restaurant.objects.filter(
+                    Q(city=city) | Q(pincode=postal_code))
+            except Restaurant.DoesNotExist:
+                raise NotFound('A restaurant with this params does not exist')
         if country and city is not None and postal_code is None:
-            queryset = Restaurant.objects.filter(country=country, city=city)
+            try:
+                queryset = Restaurant.objects.filter(country=country, city=city)
+            except Restaurant.DoesNotExist:
+                raise NotFound('A restaurant with this params does not exist')
         return queryset
 
     def get(self, request, format=None):
@@ -39,6 +46,8 @@ class RestaurantListView(generics.ListAPIView):
         filter_out_blacklisted = restaurant_qs.difference(blacklist_res_qs)
         serializer = RestaurantSerializer(filter_out_blacklisted, many=True,
                                           context={'request': self.request})
+        if not serializer.data:
+            return Response({'Message': 'Unable to find restaurant please modify your filters'})
         return Response(serializer.data)
 
 
@@ -51,6 +60,8 @@ def get_restaurant_from_reference_point(request):
             user_longitude, user_latitude, request.user)
         serializer = RestaurantSerializer(
             qs, many=True, context={'request': request})
+        if not serializer.data:
+            return Response({'Message': 'Unable to find restaurant please modify your filters'})
         return Response(serializer.data)
 
 

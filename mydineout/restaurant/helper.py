@@ -2,27 +2,34 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-15 14:57:02
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-17 14:52:27
+# @Last Modified time: 2020-06-17 15:18:41
 import datetime
 
 from django.contrib.gis.db.models.functions import GeometryDistance
 from django.contrib.gis.geos import Point
+from rest_framework.exceptions import NotFound
 
 from mydineout.profile.models import Profile
 from mydineout.restaurant.models import Restaurant
 
 
 def is_favourite_restaurant(restaurant_id, user):
-    favourite_restaurant_qs = Profile.objects.get(
-        user=user).favourite_restaurant.filter(
-        pk=restaurant_id).exists()
+    try:
+        favourite_restaurant_qs = Profile.objects.get(
+            user=user).favourite_restaurant.filter(
+            pk=restaurant_id).exists()
+    except Profile.DoesNotExists:
+        raise NotFound('Profile for the following user doesn not exist')
     return favourite_restaurant_qs
 
 
 def blacklisted_restaurant(restaurant_qs, user):
-    blacklisted_restaurant_qs = Profile.objects.get(
-        user=user).blacklisted_restaurant.filter(
-        pk__in=restaurant_qs.values_list('id', flat=True))
+    try:
+        blacklisted_restaurant_qs = Profile.objects.get(
+            user=user).blacklisted_restaurant.filter(
+            pk__in=restaurant_qs.values_list('id', flat=True))
+    except Profile.DoesNotExists:
+        raise NotFound('Profile for the following user doesn not exist')
     return blacklisted_restaurant_qs
 
 
