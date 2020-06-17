@@ -18,7 +18,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
-from mydineout.restaurant.api import (RestaurantListView,
+from mydineout.restaurant.api import (RestaurantListView, blacklist_restaurant,
+                                      favourite_restaurant,
                                       get_restaurant_from_reference_point)
 
 urlpatterns = [
@@ -26,6 +27,8 @@ urlpatterns = [
     url(r'^api/v1/auth/', include('djoser.urls.authtoken')),
     url(r'^api/v1/restaurant/getrestaurant', RestaurantListView.as_view()),
     url(r'^api/v1/restaurant/fromdistance', get_restaurant_from_reference_point),
+    url(r'^api/v1/restaurant/blacklistrestaurant', blacklist_restaurant),
+    url(r'^api/v1/restaurant/favouriterestaurant', favourite_restaurant),
 ]
 
 if settings.DEBUG:

@@ -2,15 +2,19 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-14 06:44:25
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-16 05:50:04
+# @Last Modified time: 2020-06-17 14:50:50
 from django.db.models import Q
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .helper import blacklisted_restaurant, get_restaurant_by_distance
+from .helper import (blacklist_restaurant_by_id, blacklisted_restaurant,
+                     get_restaurant_by_distance,
+                     mark_favourite_restaurant_by_id)
 from .models import Restaurant
 from .serializers import RestaurantSerializer
+
+blacklist_restaurant_by_id
 
 
 class RestaurantListView(generics.ListAPIView):
@@ -48,3 +52,19 @@ def get_restaurant_from_reference_point(request):
         serializer = RestaurantSerializer(
             qs, many=True, context={'request': request})
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+def blacklist_restaurant(request):
+    if request.method == 'GET':
+        restaurant_id = request.query_params.get('rid', None)
+        response = blacklist_restaurant_by_id(restaurant_id, request.user)
+        return Response(response)
+
+
+@api_view(['GET'])
+def favourite_restaurant(request):
+    if request.method == 'GET':
+        restaurant_id = request.query_params.get('rid', None)
+        response = mark_favourite_restaurant_by_id(restaurant_id, request.user)
+        return Response(response)

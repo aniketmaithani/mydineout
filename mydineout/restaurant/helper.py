@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-15 14:57:02
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-17 13:03:00
+# @Last Modified time: 2020-06-17 14:52:27
 import datetime
 
 from django.contrib.gis.db.models.functions import GeometryDistance
@@ -24,6 +24,22 @@ def blacklisted_restaurant(restaurant_qs, user):
         user=user).blacklisted_restaurant.filter(
         pk__in=restaurant_qs.values_list('id', flat=True))
     return blacklisted_restaurant_qs
+
+
+def blacklist_restaurant_by_id(id_, user):
+    restaurant_obj = Restaurant.objects.get(pk=id_)
+    profile_obj = Profile.objects.get(user=user)
+    profile_obj.blacklisted_restaurant.add(restaurant_obj)
+    response = {'Success': 'Restaurant has been blacklisted'}
+    return response
+
+
+def mark_favourite_restaurant_by_id(id_, user):
+    restaurant_obj = Restaurant.objects.get(pk=id_)
+    profile_obj = Profile.objects.get(user=user)
+    profile_obj.favourite_restaurant.add(restaurant_obj)
+    response = {'Success': 'Restaurant has been marked as favourite'}
+    return response
 
 
 def get_restaurant_by_distance(user_long, user_lat, user):
