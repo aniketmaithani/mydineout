@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-15 14:57:02
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-17 15:18:41
+# @Last Modified time: 2020-06-18 14:07:14
 import datetime
 
 from django.contrib.gis.db.models.functions import GeometryDistance
@@ -18,19 +18,22 @@ def is_favourite_restaurant(restaurant_id, user):
         favourite_restaurant_qs = Profile.objects.get(
             user=user).favourite_restaurant.filter(
             pk=restaurant_id).exists()
-    except Profile.DoesNotExists:
-        raise NotFound('Profile for the following user doesn not exist')
+    except Profile.DoesNotExist:
+        raise NotFound('Profile for the following user does not exist')
     return favourite_restaurant_qs
 
 
 def blacklisted_restaurant(restaurant_qs, user):
-    try:
-        blacklisted_restaurant_qs = Profile.objects.get(
-            user=user).blacklisted_restaurant.filter(
-            pk__in=restaurant_qs.values_list('id', flat=True))
-    except Profile.DoesNotExists:
-        raise NotFound('Profile for the following user doesn not exist')
-    return blacklisted_restaurant_qs
+    if 'Error' in restaurant_qs:
+        return {'Message': 'Please modify your search criteria, none found'}
+    else:
+        try:
+            blacklisted_restaurant_qs = Profile.objects.get(
+                user=user).blacklisted_restaurant.filter(
+                pk__in=restaurant_qs.values_list('id', flat=True))
+        except Restaurant.DoesNotExist:
+            raise NotFound('Not found, please modify your search query')
+        return blacklisted_restaurant_qs
 
 
 def blacklist_restaurant_by_id(id_, user):

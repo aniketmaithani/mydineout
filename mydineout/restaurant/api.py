@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-14 06:44:25
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-18 09:27:58
+# @Last Modified time: 2020-06-18 14:08:26
 from django.db.models import Q
 from rest_framework import generics
 from rest_framework.decorators import api_view
@@ -41,12 +41,15 @@ class RestaurantListView(generics.ListAPIView):
         restaurant_qs = self.get_queryset()
         blacklist_res_qs = blacklisted_restaurant(
             restaurant_qs, self.request.user)
-        filter_out_blacklisted = restaurant_qs.difference(blacklist_res_qs)
-        serializer = RestaurantSerializer(filter_out_blacklisted, many=True,
-                                          context={'request': self.request})
-        if not serializer.data:
-            return Response({'Message': 'Unable to find restaurant please modify your filters'})
-        return Response(serializer.data)
+        if 'Message' in blacklist_res_qs:
+            return Response({'Message': 'Unable to find restaurant, please modify your query'})
+        else:
+            filter_out_blacklisted = restaurant_qs.difference(blacklist_res_qs)
+            serializer = RestaurantSerializer(filter_out_blacklisted, many=True,
+                                              context={'request': self.request})
+            if not serializer.data:
+                return Response({'Message': 'Unable to find restaurant please modify your filters'})
+            return Response(serializer.data)
 
 
 @api_view(['GET'])
