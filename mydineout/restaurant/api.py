@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-14 06:44:25
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-17 15:14:22
+# @Last Modified time: 2020-06-18 09:27:58
 from django.db.models import Q
 from rest_framework import generics
 from rest_framework.decorators import api_view
@@ -14,8 +14,6 @@ from .helper import (blacklist_restaurant_by_id, blacklisted_restaurant,
                      mark_favourite_restaurant_by_id)
 from .models import Restaurant
 from .serializers import RestaurantSerializer
-
-blacklist_restaurant_by_id
 
 
 class RestaurantListView(generics.ListAPIView):

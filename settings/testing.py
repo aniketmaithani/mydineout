@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-14 14:50:48
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-15 13:43:47
+# @Last Modified time: 2020-06-18 09:16:07
 from .development import *
 
 MEDIA_ROOT = "/tmp"

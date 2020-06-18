@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2019-03-14 14:42:46
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-14 14:44:31
+# @Last Modified time: 2020-06-18 10:19:36
 """
 Source : Fueled Django-Init
 This module is used to provide configuration, fixtures, and plugins for pytest.
