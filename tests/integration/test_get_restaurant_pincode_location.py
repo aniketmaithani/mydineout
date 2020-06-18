@@ -2,14 +2,13 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-18 11:11:06
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-18 15:03:14
+# @Last Modified time: 2020-06-18 15:06:40
 import datetime
 import random
 
 import pytest
 from django.contrib.auth import authenticate
 from django.contrib.gis.geos import Point
-from faker import Faker
 from rest_framework.authtoken.models import Token
 
 from mydineout.profile.models import Profile
@@ -20,7 +19,6 @@ from .. import factories as f
 
 @pytest.mark.django_db
 def test_get_restaurant(client):
-    faker = Faker()
     menu = ['Thai', 'Chinese', 'Continental', 'Indian', 'Japanese']
     long = 77.0752
     lat = 28.4024
