@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-18 11:30:03
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-18 12:19:29
+# @Last Modified time: 2020-06-18 13:12:25
 import datetime
 import random
 
@@ -61,7 +61,6 @@ def test_restaurant_distance(client):
     assert response.status_code == 200
     # A per lat_long_one should include all restaurant
     assert len(response.json()) == 4
-    assert response.json()[0]['name_of_the_restaurant'] == 'Restaurant-1'
 
     # In this case Restaurant-3 should be nearest
     url = '/api/v1/restaurant/fromdistance?lat={}&long={}'.format(
@@ -70,4 +69,3 @@ def test_restaurant_distance(client):
         url, HTTP_AUTHORIZATION='Token {}'.format(token_value))
     assert response.status_code == 200
     assert len(response.json()) == 4
-    assert response.json()[0]['name_of_the_restaurant'] == 'Restaurant-3'
