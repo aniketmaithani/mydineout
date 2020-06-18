@@ -1,5 +1,7 @@
 # mydineout
 
+[![Build Status](https://travis-ci.com/aniketmaithani/mydineout.svg?token=oSFWgtSbfV6Xh4RcbPpE&branch=master)](https://travis-ci.com/aniketmaithani/mydineout)
+
 ## Getting started
 - Before starting make sure you have `git` installed on your system.
 - The project uses postgres and gdal libraries. In order to install them on your system follow the instructions [here.](https://docs.djangoproject.com/en/3.0/ref/contrib/gis/install/)
