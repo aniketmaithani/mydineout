@@ -2,7 +2,7 @@
 # @Author: Aniket Maithani
 # @Date:   2020-06-18 11:11:06
 # @Last Modified by:   Aniket Maithani
-# @Last Modified time: 2020-06-18 11:26:19
+# @Last Modified time: 2020-06-18 15:03:14
 import datetime
 import random
 
@@ -44,7 +44,7 @@ def test_get_restaurant(client):
         opening_time = datetime.time(10, 00, 00)
         closing_time = datetime.time(23, 00, 00)
 
-        Restaurant.objects.create(name_of_the_restaurant=faker.company(),
+        Restaurant.objects.create(name_of_the_restaurant="Restaurant-{}".format(random.randint(8, 19)),
                                   opening_time=opening_time,
                                   closing_time=closing_time,
                                   menu=menu[random.randint(0, 4)],
