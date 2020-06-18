@@ -21,9 +21,12 @@
 - Take a look at the `.env.sample` file and fill the values as per your requirement.
 - Once the setup is completed, run migration `python manage.py migrate`.
 - Once this is done create superuser : `python manage.py createsuperuser`
+- In case you want to create some dummy data and profiles you can use the following commands 
+- `python manage.py create_restaurant` 
+- `python manage.py create_profile`
 - Run the app : `python manage.py runserver` 
 
 
 ### FOR PRODUCTION : In case you want to use this app in production make sure you have prod related dependencies installed and your keys and secrets are in an `.env` file. 
 
-# * ANYTHING IN MASTER IS ALWAYS DEPLOYABLE * 
+#### * ANYTHING IN MASTER IS ALWAYS DEPLOYABLE * 
